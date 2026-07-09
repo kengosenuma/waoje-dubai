@@ -63,30 +63,35 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="fixed inset-0 z-[9999] bg-black flex items-center justify-center"
           >
-            <div className="relative w-40 h-40">
-              {/* Background Grid */}
-              <div className="absolute inset-0 border-2 border-amber-500/30 rounded-lg" />
+            <div className="relative w-48 h-48">
+              {/* Background Glow */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/20 to-red-500/20 blur-2xl" />
 
-              {/* 3D Rotating Logo */}
+              {/* 3D Rotating WAOJE Logo */}
               <motion.div
                 animate={{
                   rotateX: [0, 360],
-                  rotateY: [0, 360],
-                  rotateZ: [0, 360],
+                  rotateY: [0, 180, 360],
+                  rotateZ: [0, 90, 180, 270, 360],
                 }}
                 transition={{
-                  duration: 3,
+                  duration: 4,
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                style={{ perspective: "1000px" }}
+                style={{ perspective: "1200px" }}
                 className="w-full h-full flex items-center justify-center"
               >
-                <div className="text-6xl font-black text-center">
-                  <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-300 bg-clip-text text-transparent animate-pulse">
-                    W
-                  </span>
-                </div>
+                <svg viewBox="0 0 200 240" className="w-40 h-48 drop-shadow-lg">
+                  {/* Outer Triangle */}
+                  <path d="M 100 20 L 30 160 L 170 160 Z" fill="none" stroke="#000000" strokeWidth="5" strokeLinejoin="round"/>
+                  {/* Inner Triangle */}
+                  <path d="M 100 50 L 55 140 L 145 140 Z" fill="none" stroke="#000000" strokeWidth="5" strokeLinejoin="round"/>
+                  {/* Red Circle */}
+                  <circle cx="100" cy="100" r="12" fill="#EF4444"/>
+                  {/* Text */}
+                  <text x="100" y="195" fontFamily="Arial, sans-serif" fontSize="32" fontWeight="bold" textAnchor="middle" fill="#000000" letterSpacing="2">WAOJE</text>
+                </svg>
               </motion.div>
 
               {/* Orbiting Elements */}
