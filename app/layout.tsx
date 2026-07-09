@@ -4,7 +4,7 @@ import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ["latin", "ja"],
 });
 
 const geistMono = Geist_Mono({
@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WAOJE Dubai | Japanese Entrepreneurs Network",
-  description: "WAOJE Dubai - Network of Japanese entrepreneurs based in Dubai, connecting global business opportunities.",
+  title: "WAOJE Dubai | グローバル起業家ネットワーク",
+  description: "中東の中心地で新しいビジネスチャンスを創造する日本の起業家コミュニティ。ドバイにおけるビジネスパートナーシップとネットワーキング。",
 };
 
 export default function RootLayout({
@@ -24,10 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="ja"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <link rel="icon" href="/waoje-favicon.svg" type="image/svg+xml" />
+      </head>
+      <body className="min-h-full flex flex-col bg-black text-white">{children}</body>
     </html>
   );
 }
