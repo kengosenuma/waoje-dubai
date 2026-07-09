@@ -404,6 +404,68 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Video Section */}
+      <section className="relative py-32 px-6 bg-black overflow-hidden">
+        <div className="max-w-5xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-black mb-12 text-center"
+          >
+            <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
+              GVF ダイジェスト
+            </span>
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative w-full rounded-2xl overflow-hidden border-2 border-amber-500/30 shadow-2xl"
+          >
+            <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center relative group">
+              {/* Video Player Background */}
+              <video
+                className="w-full h-full object-cover"
+                controls
+                poster="/images/gvf-poster.jpg"
+              >
+                <source src="/videos/gvf-digest.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              {/* Play Button Overlay (if video not auto-loaded) */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-20 h-20 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 flex items-center justify-center shadow-lg"
+                >
+                  <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                  </svg>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="text-center text-gray-300 mt-8 text-lg"
+          >
+            Global Venture Forum 2025 Dubai の全体ダイジェスト。
+            <br />
+            世界中の起業家による最高のネットワーキングイベント。
+          </motion.p>
+        </div>
+      </section>
+
       {/* Events Section */}
       <section id="events" className="relative py-32 px-6 bg-gradient-to-b from-transparent via-amber-950/10 to-transparent overflow-hidden">
         {/* Background Video */}
