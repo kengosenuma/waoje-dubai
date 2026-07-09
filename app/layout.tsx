@@ -4,7 +4,7 @@ import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin", "ja"],
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
