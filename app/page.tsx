@@ -283,25 +283,28 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-black mb-8 leading-tight">
+          <motion.h1 variants={itemVariants} className="text-6xl md:text-7xl font-black mb-8 leading-tight">
             <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-300 bg-clip-text text-transparent">
-              グローバル
+              WAOJE
             </span>
             <br />
-            <span className="text-white">起業家ネットワーク</span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-              ドバイ版
-            </span>
+            <span className="text-white">ドバイ支部</span>
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
-            className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light"
+            className="text-2xl md:text-3xl text-gray-100 mb-10 max-w-4xl mx-auto leading-relaxed font-bold"
           >
-            中東の中心地で新しいビジネスチャンスを創造する日本の起業家コミュニティ。
+            日本のために、日本を出る。
+          </motion.p>
+
+          <motion.p
+            variants={itemVariants}
+            className="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light"
+          >
+            中東の中心地・ドバイから、グローバルなビジネスチャンスと
             <br />
-            グローバルな視点とローカルな深さで、ドバイのエコシステムに参画します。
+            人生経験を創造する日本人起業家のコミュニティ。
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center">
