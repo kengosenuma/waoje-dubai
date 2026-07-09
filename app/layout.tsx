@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WAOJE Dubai | グローバル起業家ネットワーク",
-  description: "中東の中心地で新しいビジネスチャンスを創造する日本の起業家コミュニティ。ドバイにおけるビジネスパートナーシップとネットワーキング。",
+  title: "WAOJE ドバイ支部 | 日本のために、日本を出る。",
+  description: "中東の中心地・ドバイを拠点に、グローバルなビジネスチャンスと出会いを創造する日本人起業家のコミュニティ、WAOJEドバイ支部。",
 };
 
 export default function RootLayout({
