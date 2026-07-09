@@ -100,19 +100,18 @@ export default function Home() {
         {floatingContainers.map((container, idx) => (
           <motion.div
             key={idx}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.15 }}
-            transition={{ delay: container.delay, duration: 1 }}
-            className={`absolute rounded-full blur-3xl w-96 h-96 bg-gradient-to-br ${container.color}`}
+            initial={{ opacity: 0, x: container.x, y: container.y }}
             animate={{
+              opacity: 0.15,
               x: [container.x, container.x + 50, container.x],
               y: [container.y, container.y - 50, container.y],
             }}
             transition={{
-              duration: 8 + idx * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
+              opacity: { delay: container.delay, duration: 1 },
+              x: { duration: 8 + idx * 2, repeat: Infinity, ease: "easeInOut" },
+              y: { duration: 8 + idx * 2, repeat: Infinity, ease: "easeInOut" },
             }}
+            className={`absolute rounded-full blur-3xl w-96 h-96 bg-gradient-to-br ${container.color}`}
           />
         ))}
 
