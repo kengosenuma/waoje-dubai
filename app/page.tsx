@@ -215,6 +215,21 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        {/* Background Video Layer */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          style={{
+            backgroundImage: "linear-gradient(135deg, rgba(251,146,60,0.4), rgba(30,144,255,0.4))",
+          }}
+        >
+          <source src="/videos/dubai-hero-bg.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
         {/* Animated Background Cubes */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(6)].map((_, i) => (
@@ -391,7 +406,17 @@ export default function Home() {
 
       {/* Events Section */}
       <section id="events" className="relative py-32 px-6 bg-gradient-to-b from-transparent via-amber-950/10 to-transparent overflow-hidden">
-        <div className="max-w-6xl mx-auto">
+        {/* Background Video */}
+        <video
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover opacity-20 -z-10"
+        >
+          <source src="/videos/dubai-events-bg.mp4" type="video/mp4" />
+        </video>
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -433,7 +458,17 @@ export default function Home() {
 
       {/* Members Section */}
       <section id="members" className="relative py-32 px-6 overflow-hidden">
-        <div className="max-w-6xl mx-auto">
+        {/* Background Video */}
+        <video
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover opacity-15 -z-10"
+        >
+          <source src="/videos/dubai-members-bg.mp4" type="video/mp4" />
+        </video>
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -472,7 +507,17 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="relative py-32 px-6 bg-gradient-to-b from-transparent to-amber-950/20 overflow-hidden">
-        <div className="max-w-3xl mx-auto text-center">
+        {/* Background Video */}
+        <video
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover opacity-25 -z-10"
+        >
+          <source src="/videos/dubai-contact-bg.mp4" type="video/mp4" />
+        </video>
+
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
