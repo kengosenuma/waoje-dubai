@@ -65,8 +65,8 @@ export default function Home() {
   const events = [
     {
       title: "Global Venture Forum",
-      date: "年1回開催",
-      desc: "世界中のWAOJEメンバーが集う最大規模のネットワーキングイベント。基調講演・パネルディスカッション・表彰式を通じ、次のビジネスの種を見つける3日間。",
+      date: "2025年はドバイで開催",
+      desc: "世界中のWAOJEメンバーが集うWAOJE最大規模のネットワーキングイベント。開催都市は持ち回りで、2025年はドバイ支部がホストを担当。基調講演・パネルディスカッション・表彰式を通じ、次のビジネスの種を見つける3日間。",
       video: "/videos/dubai-difc.mp4",
     },
     {

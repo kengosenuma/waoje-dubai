@@ -20,20 +20,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "メールアドレスの形式が正しくありません" }, { status: 400 });
     }
 
-    const siteKey = process.env.RECAPTCHA_SITE_KEY_PRESENT;
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-    if (secretKey && body.recaptchaToken) {
+    if (secretKey) {
+      if (!body.recaptchaToken) {
+        return NextResponse.json({ error: "認証に失敗しました" }, { status: 403 });
+      }
       const verifyRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `secret=${secretKey}&response=${body.recaptchaToken}`,
       });
       const verifyData = await verifyRes.json();
-      if (!verifyData.success || (verifyData.score ?? 1) < 0.5) {
+      if (!verifyData.success || verifyData.action !== "contact" || (verifyData.score ?? 1) < 0.5) {
         return NextResponse.json({ error: "認証に失敗しました" }, { status: 403 });
       }
     }
-    void siteKey;
 
     const slackToken = process.env.SLACK_WAOJE_BOT_TOKEN;
     if (!slackToken) {
