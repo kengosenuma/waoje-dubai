@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X, ArrowUpRight, Play } from "lucide-react";
-import { WaojeLogo } from "@/components/waoje-logo";
+import { WaojeLogo3D } from "@/components/waoje-logo-3d";
+import { ContactForm } from "@/components/contact-form";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -66,27 +67,27 @@ export default function Home() {
       title: "Global Venture Forum",
       date: "年1回開催",
       desc: "世界中のWAOJEメンバーが集う最大規模のネットワーキングイベント。基調講演・パネルディスカッション・表彰式を通じ、次のビジネスの種を見つける3日間。",
-      img: "/images/panel-discussion.jpg",
+      video: "/videos/dubai-difc.mp4",
     },
     {
       title: "月例ミートアップ",
       date: "毎月開催",
       desc: "ドバイ拠点のメンバーによる定期的なビジネスミーティングと交流会。現地の最新情報とリアルな知見を共有します。",
-      img: "/images/gala-toast.jpg",
+      video: "/videos/dubai-marina.mp4",
     },
     {
       title: "ビジネスパートナーシップ会",
       date: "随時開催",
       desc: "業種を超えた新しいビジネスチャンスとパートナーシップを創造する場。一人では見えない機会が、ここにはあります。",
-      img: "/images/audience-wide.jpg",
+      video: "/videos/hero-burj.mp4",
     },
   ];
 
   const stats = [
-    { value: "2004", label: "香港での創立" },
-    { value: "20+", label: "拠点都市" },
-    { value: "2017", label: "WAOJE 発足" },
-    { value: "1", label: "ドバイ支部" },
+    { value: "447万", label: "ドバイの人口" },
+    { value: "92%", label: "外国人居住者の割合" },
+    { value: "3,433人", label: "在ドバイ日本人数(2025年10月時点)" },
+    { value: "5,300人", label: "UAE在留邦人数(2025年10月時点)" },
   ];
 
   return (
@@ -102,14 +103,7 @@ export default function Home() {
           >
             <div className="relative w-44 h-44 flex items-center justify-center">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#C9A227]/20 to-[#E4342A]/10 blur-3xl" />
-              <motion.div
-                animate={{ rotateY: [0, 360] }}
-                transition={{ duration: 2.6, repeat: Infinity, ease: "linear" }}
-                style={{ perspective: "1200px" }}
-                className="w-36 h-40"
-              >
-                <WaojeLogo className="w-full h-full" stroke="#C9A227" dot="#E4342A" />
-              </motion.div>
+              <WaojeLogo3D size={176} />
               <motion.div
                 animate={{ opacity: [1, 0.4, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity }}
@@ -152,7 +146,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-3"
             >
-              <WaojeLogo className="w-8 h-9" stroke="#C9A227" dot="#E4342A" />
+              <Image src="/brand/waoje-icon.png" alt="WAOJE" width={36} height={33} className="h-8 w-auto" />
               <span className="text-lg font-bold tracking-wide">
                 WAOJE <span className="text-[#C9A227]">Dubai</span>
               </span>
@@ -216,7 +210,9 @@ export default function Home() {
             style={{ y: heroImageY, scale: heroImageScale }}
             className="absolute inset-0 -z-10"
           >
-            <Image src="/images/hero-skyline.jpg" alt="Dubai skyline" fill priority className="object-cover" />
+            <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
+              <source src="/videos/hero-burj.mp4" type="video/mp4" />
+            </video>
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-[#0a0a0a]/20" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/40 via-transparent to-transparent" />
           </motion.div>
@@ -323,15 +319,15 @@ export default function Home() {
               transition={{ duration: 0.9 }}
               viewport={{ once: true }}
             >
-              <span className="text-[#C9A227] text-sm font-bold tracking-[0.2em]">ABOUT</span>
+              <span className="text-[#C9A227] text-sm font-bold tracking-[0.2em]">ABOUT DUBAI</span>
               <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6 leading-tight">
-                WAOJE について
+                ドバイについて
               </h2>
               <p className="text-gray-300 leading-relaxed mb-6">
-                WAOJEは、海外を拠点に活躍する日本人起業家のグローバルネットワークです。2004年、香港で7名の起業家が立ち上げた小さなコミュニティは、2017年に「WAOJE」として再編され、現在は世界20都市以上に拠点を広げています。
+                ドバイは人口の9割以上を外国人が占める、世界でも類を見ない多国籍都市です。所得税・法人税の優遇や、アジア・欧州・アフリカを結ぶ地理的優位性を背景に、世界中の企業家がビジネスの拠点を構えています。
               </p>
               <p className="text-gray-400 leading-relaxed mb-8">
-                ドバイ支部では、中東の急成長する経済圏を背景に、新たなビジネスチャンスとパートナーシップを日本人起業家同士で創造しています。
+                WAOJEドバイ支部は、この急成長する経済圏で、日本人起業家同士が新たなビジネスチャンスとパートナーシップを創造するためのコミュニティです。
               </p>
               <motion.a href="#events" whileHover={{ x: 6 }} className="inline-flex items-center gap-2 text-[#C9A227] font-bold">
                 イベントを見る <ArrowUpRight size={18} />
@@ -397,12 +393,15 @@ export default function Home() {
                   whileHover={{ y: -8 }}
                   className="relative rounded-2xl overflow-hidden h-96 group cursor-pointer"
                 >
-                  <Image
-                    src={event.img}
-                    alt={event.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  >
+                    <source src={event.video} type="video/mp4" />
+                  </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
                   <div className="absolute bottom-0 left-0 p-7">
                     <div className="h-1 w-10 bg-[#C9A227] mb-4 group-hover:w-full transition-all duration-500" />
@@ -426,7 +425,9 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative h-64 rounded-2xl overflow-hidden mb-16"
             >
-              <Image src="/images/audience-wide.jpg" alt="WAOJE community" fill className="object-cover" />
+              <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
+                <source src="/videos/dubai-marina.mp4" type="video/mp4" />
+              </video>
               <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
               <div className="absolute inset-0 flex items-center px-10">
                 <div>
@@ -469,21 +470,18 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative max-w-2xl mx-auto text-center"
+            className="relative max-w-lg mx-auto"
           >
-            <span className="text-[#C9A227] text-sm font-bold tracking-[0.2em]">JOIN US</span>
-            <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6">参加・お問い合わせ</h2>
-            <p className="text-gray-300 mb-10 leading-relaxed">
-              WAOJEドバイ支部へのご参加やご質問は、お気軽にお問い合わせください。
-            </p>
-            <motion.a
-              href="mailto:contact@waojedubai.com"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              className="inline-block px-12 py-4 bg-[#C9A227] text-black font-black rounded-full hover:shadow-[0_0_50px_rgba(201,162,39,0.5)] transition-shadow"
-            >
-              お問い合わせフォーム
-            </motion.a>
+            <div className="text-center mb-10">
+              <span className="text-[#C9A227] text-sm font-bold tracking-[0.2em]">JOIN US</span>
+              <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6">参加・お問い合わせ</h2>
+              <p className="text-gray-300 leading-relaxed">
+                WAOJEドバイ支部へのご参加やご質問は、お気軽にお問い合わせください。
+              </p>
+            </div>
+            <div className="bg-[#0a0a0a]/70 backdrop-blur-md border border-white/10 rounded-2xl p-8">
+              <ContactForm />
+            </div>
           </motion.div>
         </section>
 
@@ -491,7 +489,7 @@ export default function Home() {
         <footer className="border-t border-white/10 bg-[#0a0a0a] py-12 px-6 lg:px-10">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-3">
-              <WaojeLogo className="w-6 h-7" stroke="#C9A227" dot="#E4342A" />
+              <Image src="/brand/waoje-icon.png" alt="WAOJE" width={28} height={26} className="h-6 w-auto" />
               <span className="text-sm text-gray-400">© 2026 WAOJE Dubai. All rights reserved.</span>
             </div>
             <div className="flex gap-8">
