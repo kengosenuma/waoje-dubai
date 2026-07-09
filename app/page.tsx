@@ -3,15 +3,40 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Menu, X, ArrowUpRight, Play } from "lucide-react";
+import { Menu, X, ArrowUpRight, Play, ExternalLink } from "lucide-react";
 import { WaojeLogo3D } from "@/components/waoje-logo-3d";
 import { ContactForm } from "@/components/contact-form";
+
+type BlogPost = { title: string; url: string; pubDate: string; thumbnail: string };
+
+function formatRelativeTime(dateStr: string): string {
+  const date = new Date(dateStr);
+  const diffMs = Date.now() - date.getTime();
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (days < 1) return "今日";
+  if (days < 7) return `${days}日前`;
+  if (days < 30) return `${Math.floor(days / 7)}週間前`;
+  if (days < 365) return `${Math.floor(days / 30)}か月前`;
+  return `${Math.floor(days / 365)}年前`;
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogLoading, setBlogLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/blog")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.posts)) setBlogPosts(data.posts);
+      })
+      .catch(() => {})
+      .finally(() => setBlogLoading(false));
+  }, []);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -39,9 +64,10 @@ export default function Home() {
 
   const navLinks = [
     { name: "概要", href: "#about" },
-    { name: "ダイジェスト", href: "#digest" },
+    { name: "GVF2025", href: "#digest" },
     { name: "イベント", href: "#events" },
     { name: "メンバー", href: "#members" },
+    { name: "ブログ", href: "#blog" },
     { name: "お問い合わせ", href: "#contact" },
   ];
 
@@ -49,7 +75,7 @@ export default function Home() {
     "WAOJE ドバイ支部",
     "GLOBAL VENTURE FORUM",
     "日本のために、日本を出る。",
-    "JAPANESE ENTREPRENEURS NETWORK",
+    "World Association of Overseas Japanese Entrepreneurs",
     "DUBAI CHAPTER",
   ];
 
@@ -83,8 +109,28 @@ export default function Home() {
     },
   ];
 
+  const members = [
+    {
+      name: "Wasim Fukase",
+      role: "ドバイ支部 2026年度支部長",
+      company: "[会社名 プレースホルダー]",
+      website: "#",
+      linkedin: "#",
+      photo: null,
+    },
+    {
+      name: "瀬沼 健吾",
+      role: "ドバイ支部 2026年度理事",
+      company: "S&K Holdings株式会社 代表取締役",
+      website: "https://sandkholdings.co.jp/",
+      linkedin: "https://www.linkedin.com/in/kengosenuma/",
+      photo: "/images/members/kengo-senuma.jpg",
+    },
+  ];
+
+
   const stats = [
-    { value: "447万", label: "ドバイの人口" },
+    { value: "447万人", label: "ドバイの人口(2026年時点)" },
     { value: "92%", label: "外国人居住者の割合" },
     { value: "3,433人", label: "在ドバイ日本人数(2025年10月時点)" },
     { value: "5,300人", label: "UAE在留邦人数(2025年10月時点)" },
@@ -347,7 +393,7 @@ export default function Home() {
               className="text-center mb-12"
             >
               <span className="text-[#C9A227] text-sm font-bold tracking-[0.2em]">GVF 2025 DUBAI</span>
-              <h2 className="text-4xl md:text-5xl font-black mt-4">全体ダイジェスト</h2>
+              <h2 className="text-4xl md:text-5xl font-black mt-4">GVF2025 ダイジェスト</h2>
             </motion.div>
 
             <motion.div
@@ -438,7 +484,7 @@ export default function Home() {
             </motion.div>
 
             <div className="grid md:grid-cols-4 gap-6">
-              {[...Array(8)].map((_, i) => (
+              {members.map((m, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.85 }}
@@ -446,14 +492,120 @@ export default function Home() {
                   transition={{ delay: i * 0.05, duration: 0.5 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -4 }}
+                  className="rounded-xl bg-white/5 border border-white/10 p-5 flex flex-col items-center text-center gap-2 hover:border-[#C9A227]/50 transition-colors"
+                >
+                  {m.photo ? (
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden mb-1">
+                      <Image src={m.photo} alt={m.name} fill className="object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C9A227] to-[#8a7218] flex items-center justify-center text-black font-black text-2xl mb-1">
+                      {m.name.charAt(0)}
+                    </div>
+                  )}
+                  <p className="font-bold text-sm">{m.name}</p>
+                  <p className="text-[#C9A227] text-xs font-semibold">{m.role}</p>
+                  <p className="text-gray-500 text-xs">{m.company}</p>
+                  <div className="flex gap-3 mt-1">
+                    {m.website !== "#" && (
+                      <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
+                        HP
+                      </a>
+                    )}
+                    {m.linkedin !== "#" && (
+                      <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
+                        LinkedIn
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={`placeholder-${i}`}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: (i + members.length) * 0.05, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -4 }}
                   className="aspect-square rounded-xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-3 hover:border-[#C9A227]/50 transition-colors"
                 >
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#C9A227] to-[#8a7218] flex items-center justify-center text-black font-black text-xl">
-                    {i + 1}
+                    {i + members.length + 1}
                   </div>
-                  <p className="text-xs text-gray-500">[メンバー {i + 1}]</p>
+                  <p className="text-xs text-gray-500">[メンバー {i + members.length + 1}]</p>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Blog Section */}
+        <section id="blog" className="relative py-28 px-6 lg:px-10">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-16 flex items-end justify-between flex-wrap gap-4"
+            >
+              <div>
+                <span className="text-[#C9A227] text-sm font-bold tracking-[0.2em]">BLOG</span>
+                <h2 className="text-4xl md:text-5xl font-black mt-4">ブログ</h2>
+              </div>
+              <motion.a
+                href="https://note.com/waoje_dubai"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ x: 4 }}
+                className="inline-flex items-center gap-2 text-[#C9A227] font-bold"
+              >
+                note で全記事を見る <ExternalLink size={16} />
+              </motion.a>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {blogLoading &&
+                [0, 1].map((i) => (
+                  <div key={i} className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] animate-pulse">
+                    <div className="h-52 bg-white/5" />
+                    <div className="p-6 space-y-3">
+                      <div className="h-3 w-20 bg-white/10 rounded" />
+                      <div className="h-5 w-3/4 bg-white/10 rounded" />
+                    </div>
+                  </div>
+                ))}
+              {!blogLoading &&
+                blogPosts.map((post, idx) => (
+                  <motion.a
+                    key={idx}
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.12, duration: 0.7 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -6 }}
+                    className="group rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-[#C9A227]/50 transition-colors"
+                  >
+                    <div className="relative h-52 overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- external note.com CDN thumbnail, domain varies per post */}
+                      <img
+                        src={post.thumbnail}
+                        alt={post.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <p className="text-[#C9A227] text-xs font-bold mb-2">{formatRelativeTime(post.pubDate)}</p>
+                      <h3 className="text-lg font-bold leading-snug group-hover:text-[#C9A227] transition-colors">
+                        {post.title}
+                      </h3>
+                    </div>
+                  </motion.a>
+                ))}
             </div>
           </div>
         </section>

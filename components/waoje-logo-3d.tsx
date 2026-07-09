@@ -1,90 +1,41 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Builds a hollow-outline triangle (line-art look) as an extrudable Shape
-// by tracing the outer path and cutting a slightly-inset inner path as a hole.
-function outlineTriangleShape(points: [number, number][], strokeWidth: number) {
-  const outer = new THREE.Shape();
-  points.forEach(([x, y], i) => (i === 0 ? outer.moveTo(x, y) : outer.lineTo(x, y)));
-  outer.closePath();
-
-  const centroid = points.reduce(
-    (acc, [x, y]) => [acc[0] + x / points.length, acc[1] + y / points.length],
-    [0, 0]
-  );
-  const inset: [number, number][] = points.map(([x, y]) => {
-    const dx = x - centroid[0];
-    const dy = y - centroid[1];
-    const len = Math.hypot(dx, dy);
-    const scale = Math.max(0, (len - strokeWidth) / len);
-    return [centroid[0] + dx * scale, centroid[1] + dy * scale];
-  });
-
-  const hole = new THREE.Path();
-  inset.forEach(([x, y], i) => (i === 0 ? hole.moveTo(x, y) : hole.lineTo(x, y)));
-  hole.closePath();
-  outer.holes.push(hole);
-
-  return outer;
-}
-
-function LogoMesh() {
+// Renders the real WAOJE logo (public/brand/waoje-icon-transparent.png) as a
+// textured 3D plate that rotates in genuine 3D space, so the shape stays
+// pixel-accurate to the official mark instead of a hand-traced approximation.
+function LogoPlate() {
   const groupRef = useRef<THREE.Group>(null);
-
-  const geometries = useMemo(() => {
-    const extrudeSettings = { depth: 8, bevelEnabled: true, bevelThickness: 1, bevelSize: 1, bevelSegments: 2 };
-
-    const outerShape = outlineTriangleShape(
-      [
-        [100, 45],
-        [42, 158],
-        [158, 158],
-      ],
-      7
-    );
-    const innerShape = outlineTriangleShape(
-      [
-        [100, 72],
-        [62, 140],
-        [138, 140],
-      ],
-      6
-    );
-    const dotShape = new THREE.Shape().absarc(100, 107, 13, 0, Math.PI * 2, false);
-
-    const outerGeo = new THREE.ExtrudeGeometry(outerShape, extrudeSettings);
-    const innerGeo = new THREE.ExtrudeGeometry(innerShape, extrudeSettings);
-    const dotGeo = new THREE.ExtrudeGeometry(dotShape, { ...extrudeSettings, depth: 10 });
-
-    // Center + normalize: source coords are in a 0..200 SVG box, recentre on (100,100) and flip Y.
-    [outerGeo, innerGeo, dotGeo].forEach((geo) => {
-      geo.translate(-100, -100, -4);
-      geo.scale(1, -1, 1);
-      geo.scale(0.018, 0.018, 0.018);
-    });
-
-    return { outerGeo, innerGeo, dotGeo };
-  }, []);
+  const texture = useLoader(THREE.TextureLoader, "/brand/waoje-icon-transparent.png");
+  texture.colorSpace = THREE.SRGBColorSpace;
 
   useFrame((_, delta) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.8;
+      groupRef.current.rotation.y += delta * 0.9;
     }
   });
 
+  const aspect = 174 / 160;
+  const height = 2.4;
+  const width = height * aspect;
+  const depth = 0.1;
+
   return (
     <group ref={groupRef}>
-      <mesh geometry={geometries.outerGeo}>
-        <meshStandardMaterial color="#E5BB4B" emissive="#C9A227" emissiveIntensity={0.35} metalness={0.4} roughness={0.35} />
+      <mesh position={[0, 0, depth / 2 + 0.001]}>
+        <planeGeometry args={[width, height]} />
+        <meshBasicMaterial map={texture} transparent alphaTest={0.1} side={THREE.DoubleSide} toneMapped={false} />
       </mesh>
-      <mesh geometry={geometries.innerGeo}>
-        <meshStandardMaterial color="#E5BB4B" emissive="#C9A227" emissiveIntensity={0.35} metalness={0.4} roughness={0.35} />
+      <mesh position={[0, 0, -depth / 2 - 0.001]} rotation={[0, Math.PI, 0]}>
+        <planeGeometry args={[width, height]} />
+        <meshBasicMaterial map={texture} transparent alphaTest={0.1} side={THREE.DoubleSide} toneMapped={false} />
       </mesh>
-      <mesh geometry={geometries.dotGeo}>
-        <meshStandardMaterial color="#E4342A" metalness={0.5} roughness={0.4} />
+      <mesh>
+        <boxGeometry args={[width * 0.99, height * 0.99, depth]} />
+        <meshStandardMaterial color="#C9A227" metalness={0.6} roughness={0.35} />
       </mesh>
     </group>
   );
@@ -98,11 +49,10 @@ export function WaojeLogo3D({ size = 200 }: { size?: number }) {
         camera={{ position: [0, 0, 4], fov: 40 }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[2, 3, 4]} intensity={2.2} />
-        <directionalLight position={[-2, -1, -3]} intensity={1} color="#ffffff" />
-        <pointLight position={[0, 0, 3]} intensity={1.5} color="#E5BB4B" />
-        <LogoMesh />
+        <ambientLight intensity={1.6} />
+        <directionalLight position={[2, 3, 4]} intensity={1.6} />
+        <directionalLight position={[-2, -1, -3]} intensity={0.8} color="#ffffff" />
+        <LogoPlate />
       </Canvas>
     </div>
   );
