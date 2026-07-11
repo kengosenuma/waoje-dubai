@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Menu, X, ArrowUpRight, Play, ExternalLink } from "lucide-react";
+import { Menu, X, ArrowUpRight, Play, ExternalLink, CheckCircle2 } from "lucide-react";
 import { WaojeLogo3D } from "@/components/waoje-logo-3d";
 import { ContactForm } from "@/components/contact-form";
 
@@ -630,6 +630,19 @@ export default function Home() {
               <p className="text-gray-300 leading-relaxed">
                 WAOJEドバイ支部へのご参加やご質問は、お気軽にお問い合わせください。
               </p>
+            </div>
+            <div className="mb-8 rounded-2xl border border-[#C9A227]/30 bg-[#C9A227]/5 p-6 text-left">
+              <p className="text-[#C9A227] text-xs font-bold tracking-[0.15em] mb-4">参加資格</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#C9A227]" />
+                  <span className="text-gray-200 text-sm leading-relaxed">UAE（アラブ首長国連邦）に法人があること</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#C9A227]" />
+                  <span className="text-gray-200 text-sm leading-relaxed">その法人の代表、又は筆頭株主であること</span>
+                </li>
+              </ul>
             </div>
             <div className="bg-[#0a0a0a]/70 backdrop-blur-md border border-white/10 rounded-2xl p-8">
               <ContactForm />
