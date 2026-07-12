@@ -9,6 +9,17 @@ import { ContactForm } from "@/components/contact-form";
 
 type BlogPost = { title: string; url: string; pubDate: string; thumbnail: string };
 
+type Member = {
+  name: string;
+  role: string;
+  company: string;
+  website: string;
+  company2?: string;
+  website2?: string;
+  linkedin: string;
+  photo: string | null;
+};
+
 function formatRelativeTime(dateStr: string): string {
   const date = new Date(dateStr);
   const diffMs = Date.now() - date.getTime();
@@ -109,14 +120,14 @@ export default function Home() {
     },
   ];
 
-  const members = [
+  const members: (Member | null)[] = [
     {
-      name: "Wasim Fukase",
+      name: "深瀬 ワシーム",
       role: "ドバイ支部 2026年度支部長",
-      company: "[会社名 プレースホルダー]",
-      website: "#",
-      linkedin: "#",
-      photo: null,
+      company: "HorizonX CEO / Founder",
+      website: "https://horizonx.tech/",
+      linkedin: "https://www.linkedin.com/in/wasimfukase/",
+      photo: "/images/members/wasim-fukase.jpg",
     },
     {
       name: "瀬沼 健吾",
@@ -129,6 +140,16 @@ export default function Home() {
     null,
     null,
     {
+      name: "森 和孝",
+      role: "ドバイ支部 2024・2025年度支部長",
+      company: "Eminence Luxe CEO",
+      website: "https://eminenceluxe.com/",
+      company2: "One Asia Lawyers パートナー",
+      website2: "https://oneasia.legal/",
+      linkedin: "https://www.linkedin.com/in/%E5%92%8C%E5%AD%9D-%E6%A3%AE-759280170/",
+      photo: "/images/members/kazutaka-mori.jpg",
+    },
+    {
       name: "宮崎 裕也",
       role: "ドバイ支部 2026年度メンバー",
       company: "株式会社メルビルホールディングス 代表取締役",
@@ -136,7 +157,6 @@ export default function Home() {
       linkedin: "https://www.linkedin.com/in/hiroya-miyazaki-844a4218/",
       photo: "/images/members/hiroya-miyazaki.jpg",
     },
-    null,
     null,
     null,
   ];
@@ -519,9 +539,20 @@ export default function Home() {
                     )}
                     <p className="font-bold text-sm">{m.name}</p>
                     <p className="text-[#C9A227] text-xs font-semibold">{m.role}</p>
-                    <p className="text-gray-500 text-xs">{m.company}</p>
-                    <div className="flex gap-3 mt-1">
-                      {m.website !== "#" && (
+                    {m.company2 ? (
+                      <div className="flex flex-col gap-0.5">
+                        <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#C9A227] text-xs transition-colors">
+                          {m.company}
+                        </a>
+                        <a href={m.website2} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#C9A227] text-xs transition-colors">
+                          {m.company2}
+                        </a>
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-xs">{m.company}</p>
+                    )}
+                    <div className="flex flex-wrap justify-center gap-3 mt-1">
+                      {!m.company2 && m.website !== "#" && (
                         <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
                           HP
                         </a>
