@@ -126,6 +126,19 @@ export default function Home() {
       linkedin: "https://www.linkedin.com/in/kengosenuma/",
       photo: "/images/members/kengo-senuma.jpg",
     },
+    null,
+    null,
+    {
+      name: "宮崎 裕也",
+      role: "ドバイ支部 2026年度メンバー",
+      company: "株式会社メルビルホールディングス 代表取締役",
+      website: "https://melbuild.com/",
+      linkedin: "https://www.linkedin.com/in/hiroya-miyazaki-844a4218/",
+      photo: "/images/members/hiroya-miyazaki.jpg",
+    },
+    null,
+    null,
+    null,
   ];
 
 
@@ -484,58 +497,59 @@ export default function Home() {
             </motion.div>
 
             <div className="grid md:grid-cols-4 gap-6">
-              {members.map((m, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -4 }}
-                  className="rounded-xl bg-white/5 border border-white/10 p-5 flex flex-col items-center text-center gap-2 hover:border-[#C9A227]/50 transition-colors"
-                >
-                  {m.photo ? (
-                    <div className="relative w-20 h-20 rounded-full overflow-hidden mb-1">
-                      <Image src={m.photo} alt={m.name} fill className="object-cover" />
-                    </div>
-                  ) : (
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C9A227] to-[#8a7218] flex items-center justify-center text-black font-black text-2xl mb-1">
-                      {m.name.charAt(0)}
-                    </div>
-                  )}
-                  <p className="font-bold text-sm">{m.name}</p>
-                  <p className="text-[#C9A227] text-xs font-semibold">{m.role}</p>
-                  <p className="text-gray-500 text-xs">{m.company}</p>
-                  <div className="flex gap-3 mt-1">
-                    {m.website !== "#" && (
-                      <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
-                        HP
-                      </a>
+              {members.map((m, i) =>
+                m ? (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.05, duration: 0.5 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -4 }}
+                    className="rounded-xl bg-white/5 border border-white/10 p-5 flex flex-col items-center text-center gap-2 hover:border-[#C9A227]/50 transition-colors"
+                  >
+                    {m.photo ? (
+                      <div className="relative w-20 h-20 rounded-full overflow-hidden mb-1">
+                        <Image src={m.photo} alt={m.name} fill className="object-cover" />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C9A227] to-[#8a7218] flex items-center justify-center text-black font-black text-2xl mb-1">
+                        {m.name.charAt(0)}
+                      </div>
                     )}
-                    {m.linkedin !== "#" && (
-                      <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
-                        LinkedIn
-                      </a>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={`placeholder-${i}`}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: (i + members.length) * 0.05, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -4 }}
-                  className="aspect-square rounded-xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-3 hover:border-[#C9A227]/50 transition-colors"
-                >
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#C9A227] to-[#8a7218] flex items-center justify-center text-black font-black text-xl">
-                    {i + members.length + 1}
-                  </div>
-                  <p className="text-xs text-gray-500">[メンバー {i + members.length + 1}]</p>
-                </motion.div>
-              ))}
+                    <p className="font-bold text-sm">{m.name}</p>
+                    <p className="text-[#C9A227] text-xs font-semibold">{m.role}</p>
+                    <p className="text-gray-500 text-xs">{m.company}</p>
+                    <div className="flex gap-3 mt-1">
+                      {m.website !== "#" && (
+                        <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
+                          HP
+                        </a>
+                      )}
+                      {m.linkedin !== "#" && (
+                        <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
+                          LinkedIn
+                        </a>
+                      )}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.05, duration: 0.5 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -4 }}
+                    className="aspect-square rounded-xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-3 hover:border-[#C9A227]/50 transition-colors"
+                  >
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#C9A227] to-[#8a7218] flex items-center justify-center text-black font-black text-xl">
+                      {i + 1}
+                    </div>
+                    <p className="text-xs text-gray-500">[メンバー {i + 1}]</p>
+                  </motion.div>
+                )
+              )}
             </div>
           </div>
         </section>
