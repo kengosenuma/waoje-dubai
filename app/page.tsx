@@ -12,10 +12,7 @@ type BlogPost = { title: string; url: string; pubDate: string; thumbnail: string
 type Member = {
   name: string;
   role: string;
-  company: string;
-  website: string;
-  company2?: string;
-  website2?: string;
+  companies: { name: string; website?: string }[];
   linkedin: string;
   photo: string | null;
 };
@@ -124,16 +121,17 @@ export default function Home() {
     {
       name: "深瀬 ワシーム",
       role: "ドバイ支部 2026年度支部長",
-      company: "HorizonX CEO / Founder",
-      website: "https://horizonx.tech/",
+      companies: [{ name: "HorizonX CEO / Founder", website: "https://horizonx.tech/" }],
       linkedin: "https://www.linkedin.com/in/wasimfukase/",
       photo: "/images/members/wasim-fukase.jpg",
     },
     {
       name: "瀬沼 健吾",
       role: "ドバイ支部 2026年度理事",
-      company: "S&K Holdings株式会社 代表取締役",
-      website: "https://sandkholdings.co.jp/",
+      companies: [
+        { name: "S&K Holdings株式会社 代表取締役", website: "https://sandkholdings.co.jp/" },
+        { name: "SKH International CEO", website: "https://sandkholdings.co.jp/" },
+      ],
       linkedin: "https://www.linkedin.com/in/kengosenuma/",
       photo: "/images/members/kengo-senuma.jpg",
     },
@@ -142,18 +140,17 @@ export default function Home() {
     {
       name: "森 和孝",
       role: "ドバイ支部 2024・2025年度支部長",
-      company: "Eminence Luxe CEO",
-      website: "https://eminenceluxe.com/",
-      company2: "One Asia Lawyers パートナー",
-      website2: "https://oneasia.legal/",
+      companies: [
+        { name: "Eminence Luxe CEO", website: "https://eminenceluxe.com/" },
+        { name: "One Asia Lawyers パートナー", website: "https://oneasia.legal/" },
+      ],
       linkedin: "https://www.linkedin.com/in/%E5%92%8C%E5%AD%9D-%E6%A3%AE-759280170/",
       photo: "/images/members/kazutaka-mori.jpg",
     },
     {
       name: "宮崎 裕也",
       role: "ドバイ支部 2026年度メンバー",
-      company: "株式会社メルビルホールディングス 代表取締役",
-      website: "https://melbuild.com/",
+      companies: [{ name: "株式会社メルビルホールディングス 代表取締役", website: "https://melbuild.com/" }],
       linkedin: "https://www.linkedin.com/in/hiroya-miyazaki-844a4218/",
       photo: "/images/members/hiroya-miyazaki.jpg",
     },
@@ -539,24 +536,19 @@ export default function Home() {
                     )}
                     <p className="font-bold text-sm">{m.name}</p>
                     <p className="text-[#C9A227] text-xs font-semibold">{m.role}</p>
-                    {m.company2 ? (
-                      <div className="flex flex-col gap-0.5">
-                        <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#C9A227] text-xs transition-colors">
-                          {m.company}
-                        </a>
-                        <a href={m.website2} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#C9A227] text-xs transition-colors">
-                          {m.company2}
-                        </a>
-                      </div>
-                    ) : (
-                      <p className="text-gray-500 text-xs">{m.company}</p>
-                    )}
+                    <div className="flex flex-col gap-1">
+                      {m.companies.map((c, ci) => (
+                        <div key={ci} className="flex items-center justify-center gap-2">
+                          <span className="text-gray-500 text-xs">{c.name}</span>
+                          {c.website && c.website !== "#" && (
+                            <a href={c.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline shrink-0">
+                              HP
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                     <div className="flex flex-wrap justify-center gap-3 mt-1">
-                      {!m.company2 && m.website !== "#" && (
-                        <a href={m.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
-                          HP
-                        </a>
-                      )}
                       {m.linkedin !== "#" && (
                         <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#C9A227] text-xs underline">
                           LinkedIn
